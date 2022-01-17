@@ -6,11 +6,21 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:43:57 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/17 12:51:41 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/17 12:57:16 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	size;
+
+	size = 0;
+	while (*s++)
+		size++;
+	return (size);
+}
 
 int	ft_atoi(const char *str)
 {
@@ -40,6 +50,11 @@ int	ft_atoi(const char *str)
 	return (sign * val);
 }
 
+void error(char *error_txt)
+{
+	write(2, error_txt, ft_strlen(error_txt));
+}
+
 void	parse_args(t_status *status, int argc, char **argv)
 {
 	status->pop = ft_atoi(argv[1]);
@@ -56,10 +71,8 @@ int	main(int argc, char **argv)
 
 	status = (t_status){};
 	if (argc < 5 || argc > 6)
-	{
-		write(2, "Invalid number of args", 22);
-		exit(0);
-	}
-	parse_args(&status, argc, argv);
+		error("Invalid number of args\n");
+	else
+		parse_args(&status, argc, argv);
 	return (0);
 }
