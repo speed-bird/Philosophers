@@ -6,73 +6,109 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:43:57 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/17 12:57:16 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/18 20:41:05 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-size_t	ft_strlen(const char *s)
+int	error(char *error_txt)
 {
-	size_t	size;
-
-	size = 0;
-	while (*s++)
-		size++;
-	return (size);
+	ft_putstr_fd("Error - [", 2);
+	ft_putstr_fd(error_txt, 2);
+	ft_putstr_fd("]\n", 2);
+	return (EXIT_FAILURE);
 }
 
-int	ft_atoi(const char *str)
+void	parse_args(t_meal *meal, int argc, char **argv)
 {
-	long unsigned	val;
-	long unsigned	limit;
-	int				sign;
-
-	val = 0;
-	limit = 922337203685477580;
-	sign = 1;
-	while (*str == 32 || *str == '\t' || *str == '\n'
-		|| *str == '\v' || *str == '\f' || *str == '\r')
-		str++;
-	if (*str == '-')
-		sign *= -1;
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str >= '0' && *str <= '9' && val < limit)
-		val = val * 10 + *str++ - 48;
-	if (val == limit && ((sign == 1 && *str <= '7')
-			|| (sign == -1 && *str <= '8')))
-		val = val * 10 + *str - 48;
-	else if (val >= limit && sign == 1)
-		return (-1);
-	else if (val >= limit && sign == -1)
-		return (0);
-	return (sign * val);
-}
-
-void error(char *error_txt)
-{
-	write(2, error_txt, ft_strlen(error_txt));
-}
-
-void	parse_args(t_status *status, int argc, char **argv)
-{
-	status->pop = ft_atoi(argv[1]);
-	status->ttd = ft_atoi(argv[2]);
-	status->tte = ft_atoi(argv[3]);
-	status->tts = ft_atoi(argv[4]);
+	meal->pop = ft_atoi(argv[1]);
+	meal->ttd = ft_atoi(argv[2]);
+	meal->tte = ft_atoi(argv[3]);
+	meal->tts = ft_atoi(argv[4]);
 	if (argc == 6)
-		status->min_meals = ft_atoi(argv[5]);
+		meal->min_meals = ft_atoi(argv[5]);
+}
+
+void	take_fork(int pid)
+{
+	struct timeval	tv;
+	struct timezone	tz;
+
+	gettimeofday(&tv, &tz);
+	ft_putnbr_fd(tv.tv_sec, 1);
+	ft_putstr_fd(" ", 1);
+	ft_putnbr_fd(pid, 1);
+	ft_putstr_fd(" has taken a fork\n", 1);
+}
+
+void	eat(int pid)
+{
+	struct timeval	tv;
+	struct timezone	tz;
+
+	gettimeofday(&tv, &tz);
+	ft_putnbr_fd(tv.tv_sec, 1);
+	ft_putstr_fd(" ", 1);
+	ft_putnbr_fd(pid, 1);
+	ft_putstr_fd(" is eating\n", 1);
+}
+
+void	*life(void *arg)
+{
+	int	pid;
+
+	pid = *((int *)arg);
+	take_fork(pid);
+	take_fork(pid);
+	eat(pid);
+	return (NULL);
+}
+
+int	init_threads(t_meal *meal)
+{
+	int	pid;
+	int	err;
+
+	meal->threads = (pthread_t *)malloc(sizeof(pthread_t) * meal->pop);
+	if (!meal->threads)
+		return (0);
+	pid = 0;
+	while (pid++ < meal->pop)
+	{
+		err = pthread_create(&meal->threads[pid], NULL, &life, &pid);
+		if (err)
+		{
+			free(meal->threads);
+			error("Thread creation failed");
+			return (0);
+		}
+		pthread_join(meal->threads[pid], NULL);
+	}
+	return (1);
+}
+
+int	valid_args(int argc, char **argv)
+{
+	int	i;
+
+	if (argc < 5 || argc > 6)
+		return (0);
+	i = 0;
+	while (++i < argc)
+		if (!ft_is_nbr(argv[i]) || !ft_atoi(argv[i]) || ft_atoi(argv[i]) < 1)
+			return (0);
+	return (1);
 }
 
 int	main(int argc, char **argv)
 {
-	t_status	status;
+	t_meal	meal;
 
-	status = (t_status){};
-	if (argc < 5 || argc > 6)
-		error("Invalid number of args\n");
-	else
-		parse_args(&status, argc, argv);
+	meal = (t_meal){};
+	if (!valid_args(argc, argv))
+		return (error("Invalid args"));
+	parse_args(&meal, argc, argv);
+	init_threads(&meal);
 	return (0);
 }
