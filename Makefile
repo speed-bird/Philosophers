@@ -6,13 +6,17 @@
 #    By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/16 19:40:56 by jrobert           #+#    #+#              #
-#    Updated: 2022/01/18 16:14:15 by jrobert          ###   ########.fr        #
+#    Updated: 2022/01/25 18:22:23 by jrobert          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS_FILES	= 	philo.c \
+SRCS_FILES	= 	checker.c \
+				clear.c \
+				init.c \
+				meal.c \
+				philo.c \
 				utils.c
-
+				
 SRCS_DIR	= 	srcs/
 SRCS		=	$(addprefix $(SRCS_DIR),$(SRCS_FILES))
 OBJS		= 	$(SRCS:%.c=%.o)

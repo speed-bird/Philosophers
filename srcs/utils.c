@@ -6,47 +6,43 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:14:26 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/18 18:09:02 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:32:30 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	print_status(t_philo *philo, char *action_txt, int killed)
 {
-	char	c;
-
-	if (n == -2147483648)
-		write(fd, "-2147483648", 11);
-	else if (n < 0)
+	if (!philo->meal->ended || killed)
 	{
-		write(fd, "-", 1);
-		ft_putnbr_fd(-n, fd);
-	}
-	else
-	{
-		if (n > 9)
-			ft_putnbr_fd(n / 10, fd);
-		c = n % 10 + '0';
-		write(fd, &c, 1);
+		pthread_mutex_lock(&philo->meal->print);
+		printf("%ld %d %s\n", get_time() - philo->meal->time_sm,
+			philo->id + 1, action_txt);
+		pthread_mutex_unlock(&philo->meal->print);
 	}
 }
 
-size_t	ft_strlen(const char *s)
+void	my_sleep(time_t duration)
 {
-	size_t	size;
+	time_t	time;
 
-	size = 0;
-	while (*s++)
-		size++;
-	return (size);
+	time = get_time();
+	usleep(duration * 900);
+	while (get_time() < time + duration)
+	{
+		usleep(10);
+	}
 }
 
-void	ft_putstr_fd(char *s, int fd)
+time_t	get_time(void)
 {
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
+	time_t			t;
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	t = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (t);
 }
 
 int	ft_atoi(const char *str)
