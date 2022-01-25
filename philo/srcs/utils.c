@@ -6,11 +6,11 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 16:14:26 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/25 18:32:30 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:58:21 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	print_status(t_philo *philo, char *action_txt, int killed)
 {

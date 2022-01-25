@@ -6,11 +6,11 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 17:13:30 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/25 18:02:30 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:58:36 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	*kill_philo(t_philo *philo)
 {

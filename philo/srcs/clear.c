@@ -6,11 +6,11 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 18:21:06 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/25 18:37:26 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:58:33 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 int	fail(char *error_txt)
 {

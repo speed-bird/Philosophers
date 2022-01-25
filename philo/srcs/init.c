@@ -6,11 +6,11 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:26:35 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/25 18:15:52 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:58:30 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 int	join_threads(t_meal *meal)
 {

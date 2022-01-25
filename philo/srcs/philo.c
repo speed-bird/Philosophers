@@ -6,11 +6,11 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 19:43:57 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/25 18:50:23 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:58:07 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	parse_args(t_meal *meal, int argc, char **argv)
 {

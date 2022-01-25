@@ -6,11 +6,11 @@
 /*   By: jrobert <jrobert@student.s19.be>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 16:47:00 by jrobert           #+#    #+#             */
-/*   Updated: 2022/01/25 18:16:59 by jrobert          ###   ########.fr       */
+/*   Updated: 2022/01/25 18:58:15 by jrobert          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../includes/philo.h"
 
 void	take_forks(t_philo *philo)
 {
